@@ -8,14 +8,14 @@ const path = require('path');
 const fs = require('fs').promises;
 const pageHead = '<!DOCTYPE html>\n<html lang="et">\n<head>\n\t<meta charset="utf-8">\n\t<title>Jaroslav Belkin, veevbiprogrammeerimine</title>\n</head>\n<body>\n';
 const pageBody = '\t<h1>Jaroslav Belkin, veebiprogrammeerimine</h1>\n\t <p>See leht on loodud veebiprogrammeerimisekursusel <a href="https://www.tlu.ee">Tallinna أœlikoolis</a> ning ei sislda tأµsiseltvأµetavat sisu!</p>\n\t<p>Esialgu tutvusime lihtsalt HTML keelega, peatselt programmeerime.</p>\n\t<hr>';
-const pageBanner = '<img src="./pic/veebiprogrammeerimine_2026_TA.png" alt="">';
+const pageBanner = '<img src="/veebiprogrammeerimine_2026_TA.png" alt="">';
 const pageFoot = '\n</body>\n</html>';
 
 http.createServer(async function(req, res){
 	//päring url-i
 	console.log('Päring: ' + req.url);
 	let currentURL = url.parse(req.url, true);
-	console.log('Parsituna: ' + currentURL);
+	console.log('Parsituna: ' + currentURL.pathname);
 	
 	//hakkame erinevaid lehti jaotama -> routes (maršruudid)
 	
@@ -50,6 +50,7 @@ http.createServer(async function(req, res){
 	else if(currentURL.pathname === '/vanasonad'){
 		res.writeHead(200, {"Content-type": "text/html"});
 		res.write(pageHead);
+		res.write(pageBanner);
 		res.write('\t<h1>Eesti vanasõnad</h1>\n\t<p>Siin näed tänase päeva vanasõna.</p>')
 		res.write('\n\t<p><a href="/">Tagasi avalehele</a></p>');
 		res.write(pageFoot);
